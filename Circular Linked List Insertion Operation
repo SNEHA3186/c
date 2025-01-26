@@ -1,0 +1,154 @@
+#include<stdio.h>
+#include<malloc.h>
+#include<stdlib.h>
+#include<conio.h>
+struct clinklist
+{
+		int data;
+		struct clinklist*next;
+};
+typedef struct clinklist node;
+node*start=NULL;
+node*getnode()
+{
+	node*newnode;
+    newnode=(node*)malloc(sizeof(node));
+    printf("\nenter data");
+    scanf("%d",&newnode->data);
+    newnode->next=NULL;
+    return newnode;
+}void traverse()
+{
+	node*temp;
+	temp=start;
+	printf("\n The contents of list(left to right)\n");
+	if(start==NULL)
+	printf("\n Empty list");
+	else
+	{
+		do
+		{
+				printf("%d->",temp->data);
+			temp=temp->next;
+		}
+		while(temp!=start);
+	}
+	printf("x\n");
+}
+void insert_at_beg()
+{
+	node*newnode,*last;
+	newnode=getnode();
+	if(start==NULL)
+	{
+		start=newnode;
+		newnode->next=start;
+	}
+	else 
+	{
+		last=start;
+		while(last->next!=start)
+		last=last->next;
+		newnode->next=start;
+		start=newnode;
+		last->next=start;
+	}
+}
+void insert_at_end()
+{
+	node*newnode,*temp;
+	newnode=getnode();
+	if(start==NULL)
+	{
+		start=newnode;
+	}
+	else 
+	{
+		temp=start;
+		while(temp->next!=start)
+		temp=temp->next;
+		temp->next=newnode;
+		newnode->next=start;
+	}
+}
+int countnode()
+{
+	int count=1;
+	node*temp;
+	temp=start;
+do
+	{
+		count++;
+		temp=temp->next;
+	}
+		while(temp->next!=start);
+	return count;
+}
+
+void insert_at_pos()
+{
+	node*newnode,*temp;
+	int pos,nodectr,i;
+	newnode=getnode();
+	printf("\n enter the position");
+	scanf("%d",&pos);
+	nodectr=countnode();
+	if(pos>(nodectr+1))
+	{
+		printf("position out of range");
+		return;
+	}
+	else if(pos>1&&pos<=nodectr)
+	{
+		temp=start;
+		for(i=1;i<pos-1;i++)
+		{
+			temp=temp->next;
+		}
+		newnode->next=temp->next;
+		temp->next=newnode;
+	}
+	else
+	{
+		printf("%d is not a intermediate position",pos);
+	}
+}
+int main()
+{
+	int num,ch;
+	while(1)
+	{
+	
+
+	printf("1.insert at beginning\n");
+	printf("2.insert at end\n");
+	printf("3.insert at intermediate position\n");
+	printf("4.display\n");
+	printf("5.exit\n");
+	printf("enter your choice\n");
+	scanf("%d",&ch);
+	switch(ch)
+	{
+
+        case 1:
+        	insert_at_beg();
+        	break;
+        	case 2:
+        	insert_at_end();
+        	break;
+        case 3:
+        	insert_at_pos();
+        	break;
+        	
+			case 4:
+        	traverse();
+        	break;
+			case 5:
+        	exit(0);
+        	break;
+        	default:
+        		printf("wrong choice\n:");
+        	}
+        }
+        return 0;
+    }
