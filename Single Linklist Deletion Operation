@@ -1,0 +1,194 @@
+#include<stdio.h>
+#include<malloc.h>
+#include<stdlib.h>
+#include<conio.h>
+struct slinklist
+{
+		int data;
+		struct slinklist*next;
+};
+typedef struct slinklist node;
+node*start=NULL;
+node*getnode()
+{
+	node*newnode;
+    newnode=(node*)malloc(sizeof(node));
+    printf("\nenter data");
+    scanf("%d",&newnode->data);
+    newnode->next=NULL;
+    return newnode;
+}
+void create_single_link_list(int n)
+{
+	int i;
+	node*newnode,*temp;
+	for(i=0;i<n;i++)
+	{
+		newnode=getnode();
+		if(start==NULL)
+		{
+			start=newnode;
+		}
+		else{
+			temp=start;
+			while(temp->next!=NULL)
+			temp=temp->next;
+			temp->next=newnode;
+			 
+		}
+	}
+}
+void traverse()
+{
+	node*temp;
+	temp=start;
+	printf("\n The contents of list(left to right)\n");
+	if(start==NULL)
+	printf("\n Empty list");
+	else
+	{
+		while(temp!=NULL)
+		{
+			printf("%d->",temp->data);
+			temp=temp->next;
+		}
+	}
+	printf("x\n");
+}
+void delete_at_beg()
+{
+	node*temp;
+	if(start==NULL)
+	{
+		printf("\n no nodes are exist..\n");
+		return;
+	}
+	else
+	{
+		temp=start;
+		start=start->next;
+		free(temp);
+		printf("\n node deleted..\n");
+		
+	}
+}
+void delete_at_last()
+{
+	node*temp,*prev;
+	if(start==NULL)
+	{
+		printf("\n empty list..");
+		return;
+	}
+	else
+	{
+		temp=start;
+		prev=start;
+		while(temp->next!=NULL)
+		{
+			prev=temp;
+			temp=temp->next;
+		}
+		prev->next=NULL;
+		free(temp);
+		
+	}
+}
+int countnode()
+{
+	int count=1;
+	node*temp;
+	temp=start;
+	while(temp->next!=NULL)
+	{
+		count++;
+		temp=temp->next;
+	}
+	return count;
+}
+void delete_at_pos()
+{
+	int pos,nodectr,i;
+	node*temp,*prev;
+		if(start==NULL)
+		{
+		printf("\n empty list..");
+		return;
+	}
+	else
+	{
+		printf("enter the position you want to delete");
+		scanf("%d",&pos);
+		nodectr=countnode();
+		if(pos>nodectr)
+		{
+			printf("the node does not exist");
+		
+		}
+		else if(pos>1&&pos<=nodectr)
+		{
+			prev=NULL;
+			temp=start;
+			for(i=1;i<pos;i++)
+			{
+				prev=temp;
+				temp=temp->next;
+				
+			}
+			prev->next=temp->next;
+			free(temp);
+			printf("node deleted");
+		}
+		else
+		printf("%d is not intermediate position",pos);
+		
+		
+		
+}
+}
+
+
+
+int main()
+{
+	int num,ch;
+	while(1)
+	{
+	
+	printf("1.create single link list\n");
+	printf("2.delete at beginning\n");
+	printf("3.delete at end\n");
+	printf("4.delete at intermediate position\n");
+	printf("5.display\n");
+	printf("6.exit\n");
+	printf("Enter your choice\n");
+	scanf("%d",&ch);
+	switch(ch)
+	{
+		case 1:
+			printf("enter the number of element you want to insert:\n");
+				scanf("%d",&num);
+				create_single_link_list(num);
+				break;
+        	case 2:
+        	delete_at_beg();
+        	break;
+        	case 3:
+        	delete_at_last ();
+        	break;
+        	case 4:
+        	delete_at_pos();
+        	break;
+        	
+			case 5:
+        	traverse();
+        	break;
+			case 6:
+        	exit(0);
+        	break;
+        	default:
+        		printf("wrong choice\n:");
+        	}
+        }
+        return 0;
+    }
